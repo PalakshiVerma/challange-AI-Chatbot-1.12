@@ -11,9 +11,11 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send("AI Chatbot backend is live");
 });
+
 
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
@@ -30,6 +32,9 @@ app.post("/chat", async (req, res) => {
 
     // 2. Read API key from .env
     const apiKey = process.env.OPENROUTER_API_KEY;
+    console.log("API key exists:", !!apiKey);
+    console.log("API key prefix:", apiKey ? apiKey.slice(0, 12) : "missing");
+    console.log("API key length:", apiKey ? apiKey.length : 0);
 
     if (!apiKey) {
       return res.status(500).json({ error: "OPENROUTER_API_KEY is missing in .env" });
